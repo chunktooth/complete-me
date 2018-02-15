@@ -43,6 +43,24 @@ describe('TRIE', () => {
 			expect(Object.keys(trie.children)).to.deep.eq(['t', 'p', 'c']);
 		});
 
+		 it('should only add one child node of each letter', () => {
+      trie.insert('pizza');
+      trie.insert('piano');
+
+      let childNodes = Object.keys(trie.children);
+
+      expect(childNodes.length).to.eq(1);
+    });
+
+		 it('should not increase word count for the same word', () => {
+      trie.insert('cat');
+      trie.insert('can');
+      trie.insert('cattle');
+      trie.insert('can');
+
+      expect(trie.wordCount).to.deep.equal(3);
+    });
+
 	});
 
 	describe('SUGGEST', () => {
@@ -54,18 +72,30 @@ describe('TRIE', () => {
 			trie.insert('dog');
 		})
 
-		it('should return an array of suggested words', () => {
-			let results = trie.suggest('pi');
+		it('should only return an array of suggested words', () => {
+			let results1 = trie.suggest('pi');
 
-			let check1 = results.some(result => result === 'pizza');
-			let check2 = results.some(result => result === 'pizzas');
-			let check3 = results.some(result => result === 'piano');
-			let check4 = results.some(result => result === 'dog');
+			let check1 = results1.some(result => result === 'pizza');
+			let check2 = results1.some(result => result === 'pizzas');
+			let check3 = results1.some(result => result === 'piano');
+			let check4 = results1.some(result => result === 'dog');
 
 			expect(check1).to.be.true;
 			expect(check2).to.be.true;
 			expect(check3).to.be.true;
 			expect(check4).to.be.false;
+
+			let results2 = trie.suggest('d');
+
+      let check5 = results2.some(result => result === 'pizza')
+      let check6 = results2.some(result => result === 'pizzas')
+      let check7 = results2.some(result => result === 'piano')
+      let check8 = results2.some(result => result === 'dog')
+
+      expect(check5).to.be.false;
+      expect(check6).to.be.false;
+      expect(check7).to.be.false;
+      expect(check8).to.be.true;
 		});
 
 	});
