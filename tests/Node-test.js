@@ -1,36 +1,21 @@
-import { expect } from 'chai';
+import {expect} from 'chai';
 import Node from '../lib/Node';
 
-describe('NODE', () => {
- let node;
+describe('Node', () => {
+  let node;
+  beforeEach(() => {
+    node = new Node();
+  })
 
- beforeEach(() => {
-   node = new Node('w');
- });
+  it('should exist', () => {
+    expect(node).to.exist;
+  })
 
- it('should exist', () => {
-   expect(node).to.exist
- });
+  it('should be able track if it is the last letter of a word in the trie',() => {
+    expect(node.endOfWord).to.eql(false);
+  })
 
- it('should take a letter', () => {
-   expect(node.letter).to.equal('w')
- });
-
- it('should have a defaulted letter value of null if no letter in inserted', () => {
-   let node = new Node();
-   expect(node.letter).to.equal(null)
- })
-
- it('should have a default complete word value of false', () => {
-   expect(node.completeWord).to.equal(false)
- });
-
- it('should start out with an empty children object', () => {
-   expect(node.children).to.deep.equal({})
- });
-
- it('should have a default popularity value of zero', () => {
-   expect(node.popularity).to.equal(0)
- });
-
+  it('should be able to store child nodes', () => {
+    expect(node.children).to.eql({});
+  })
 })
